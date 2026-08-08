@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import createGlobe from "cobe";
 
 /* ---- Location data for Melgara's global footprint ---- */
 const LOCATIONS = [
@@ -36,25 +35,10 @@ const ALL_POINTS = [...LOCATIONS, ...GLOBAL_ENDPOINTS];
 const LOC_MAP = {};
 ALL_POINTS.forEach((p) => (LOC_MAP[p.name] = p));
 
-const cobeMarkers = ALL_POINTS.map((p) => ({
-  location: [p.lat, p.lng],
-  size: p.role === "hq" ? 0.12 : p.role === "hub" ? 0.1 : p.role === "global" ? 0.04 : 0.06,
-}));
+const ROLE_COLORS = { hq: "var(--copper-bright)", hub: "var(--brass)", operations: "var(--text-dim)", logistics: "var(--muted)", global: "var(--faint)" };
+const ROLE_LABELS = { hq: "Headquarters", hub: "Trading Hub", operations: "Operations", logistics: "Logistics", global: "Market" };
 
-const cobeArcs = ARCS.map((a) => {
-  const from = LOC_MAP[a.from];
-  const to = LOC_MAP[a.to];
-  if (!from || !to) return null;
-  return {
-    from: [from.lat, from.lng],
-    to: [to.lat, to.lng],
-    color: from.role === "hq" || to.role === "hq" ? [0.78, 0.47, 0.24]
-      : from.role === "hub" || to.role === "hub" ? [0.79, 0.64, 0.15]
-      : [0.6, 0.57, 0.52],
-  };
-}).filter(Boolean);
-
-/* ---- 3D projection helpers ---- */
+/* ---- 3D projection helpers for tooltips ---- */
 function latLngToVector3(lat, lng, radius) {
   const phi = ((90 - lat) * Math.PI) / 180;
   const theta = ((lng + 180) * Math.PI) / 180;
@@ -80,9 +64,6 @@ function projectToScreen(point3D, phi, theta, size) {
   const halfSize = size / 2;
   return { x: halfSize + x * scale * halfSize * 0.8, y: halfSize - y2 * scale * halfSize * 0.8, z: z2 };
 }
-
-const ROLE_COLORS = { hq: "var(--copper-bright)", hub: "var(--brass)", operations: "var(--text-dim)", logistics: "var(--muted)", global: "var(--faint)" };
-const ROLE_LABELS = { hq: "Headquarters", hub: "Trading Hub", operations: "Operations", logistics: "Logistics", global: "Market" };
 
 export default function GlobeReach() {
   const canvasRef = useRef(null);
@@ -122,29 +103,51 @@ export default function GlobeReach() {
   const handleMouseLeave = useCallback(() => { setTooltip(null); setHighlighted(null); }, []);
   const handleClick = useCallback(() => { if (tooltip?.slug) navigate(`/${tooltip.slug}`); }, [tooltip, navigate]);
 
-  /* ---- Initialize cobe ---- */
+  /* ---- Initialize globe ---- */
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
     let destroyed = false;
-    let globe = null;
+    let globeInstance = null;
 
-    // Use a fixed size to avoid dimension issues
-    const GLOBE_SIZE = 500;
-    const dpr = Math.min(window.devicePixelRatio, 2);
-
-    // Set explicit canvas dimensions before cobe init
-    canvas.width = GLOBE_SIZE * dpr;
-    canvas.height = GLOBE_SIZE * dpr;
-
-    let currentPhi = 0;
-
-    // Small delay to ensure canvas is ready
-    const timer = setTimeout(() => {
+    const initGlobe = async () => {
+      // Dynamic import cobe to avoid bundling issues
+      const { default: createGlobe } = await import("cobe");
       if (destroyed) return;
+
+      const GLOBE_SIZE = 520;
+      const dpr = Math.min(window.devicePixelRatio, 2);
+
+      // Set explicit canvas dimensions
+      canvas.width = GLOBE_SIZE * dpr;
+      canvas.height = GLOBE_SIZE * dpr;
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+
+      const cobeMarkers = ALL_POINTS.map((p) => ({
+        location: [p.lat, p.lng],
+        size: p.role === "hq" ? 0.12 : p.role === "hub" ? 0.1 : p.role === "global" ? 0.04 : 0.06,
+      }));
+
+      const cobeArcs = ARCS.map((a) => {
+        const from = LOC_MAP[a.from];
+        const to = LOC_MAP[a.to];
+        if (!from || !to) return null;
+        return {
+          from: [from.lat, from.lng],
+          to: [to.lat, to.lng],
+          color: from.role === "hq" || to.role === "hq" ? [0.78, 0.47, 0.24]
+            : from.role === "hub" || to.role === "hub" ? [0.79, 0.64, 0.15]
+            : [0.6, 0.57, 0.52],
+        };
+      }).filter(Boolean);
+
+      let currentPhi = 0;
+
       try {
-        globe = createGlobe(canvas, {
+        globeInstance = createGlobe(canvas, {
           devicePixelRatio: dpr,
           width: GLOBE_SIZE * dpr,
           height: GLOBE_SIZE * dpr,
@@ -152,9 +155,9 @@ export default function GlobeReach() {
           theta: 0.15,
           dark: 1,
           diffuse: 1.4,
-          mapSamples: 16000,
+          mapSamples: 14000,
           mapBrightness: 6,
-          baseColor: [0.3, 0.3, 0.3],
+          baseColor: [0.32, 0.32, 0.32],
           markerColor: [0.78, 0.47, 0.24],
           glowColor: [0.15, 0.13, 0.11],
           markers: cobeMarkers,
@@ -169,12 +172,15 @@ export default function GlobeReach() {
       } catch (err) {
         console.warn("Globe init failed:", err);
       }
-    }, 100);
+    };
+
+    // Delay init to let DOM settle
+    const timer = setTimeout(initGlobe, 150);
 
     return () => {
       destroyed = true;
       clearTimeout(timer);
-      if (globe) { try { globe.destroy(); } catch {} }
+      if (globeInstance) { try { globeInstance.destroy(); } catch {} }
     };
   }, []);
 

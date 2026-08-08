@@ -103,18 +103,44 @@ function AboutTeaser() {
         <div className="grid grid-2 about-teaser" style={{ alignItems: "center", gap: 60 }}>
           <Reveal>
             <div className="about-teaser-img">
-              <OreCanvas3D
-                color="#7a4e2e"
-                veinColor="#b36a3c"
-                patina="#3a2a1c"
-                roughness={0.72}
-                metalness={0.55}
-                seed={9}
-                intensity={0.7}
-                detail={24}
-                dpr={1}
-                lite
-              />
+              <div style={{
+                position: "absolute",
+                inset: 0,
+                background: "radial-gradient(ellipse at 35% 30%, rgba(200,121,62,0.35) 0%, rgba(12,11,10,0.95) 70%), radial-gradient(ellipse at 70% 60%, rgba(140,90,50,0.2) 0%, transparent 50%)",
+              }} />
+              <div style={{
+                position: "absolute",
+                top: "15%",
+                left: "10%",
+                width: "80%",
+                height: "70%",
+                borderRadius: "45% 55% 50% 50% / 40% 40% 60% 60%",
+                background: "linear-gradient(135deg, #8a5226 0%, #c8793e 40%, #6b3d1a 70%, #3a2211 100%)",
+                boxShadow: "inset 8px 8px 30px rgba(0,0,0,0.5), inset -4px -4px 20px rgba(200,121,62,0.3), 0 20px 60px -10px rgba(0,0,0,0.8)",
+                transform: "rotate(-5deg)",
+              }} />
+              <div style={{
+                position: "absolute",
+                top: "25%",
+                left: "20%",
+                width: "30%",
+                height: "20%",
+                borderRadius: "60% 40% 50% 50%",
+                background: "linear-gradient(160deg, #c8793e, #e8944f 60%, #c8793e)",
+                opacity: 0.6,
+                filter: "blur(2px)",
+              }} />
+              <div style={{
+                position: "absolute",
+                bottom: "30%",
+                right: "15%",
+                width: "20%",
+                height: "15%",
+                borderRadius: "50% 50% 40% 60%",
+                background: "linear-gradient(120deg, #3d8d84, #2a6b63)",
+                opacity: 0.5,
+                filter: "blur(1px)",
+              }} />
               <span className="about-teaser-label">{t("who.coreSample")}</span>
             </div>
           </Reveal>
@@ -352,18 +378,44 @@ function GlobalTeaser() {
           </div>
           <Reveal delay={100}>
             <div className="global-teaser-img">
-              <OreCanvas3D
-                color="#b9c0c7"
-                veinColor="#f2f6f9"
-                patina="#8d979e"
-                roughness={0.5}
-                metalness={0.2}
-                seed={16}
-                intensity={0.7}
-                detail={24}
-                dpr={1}
-                lite
-              />
+              <div style={{
+                position: "absolute",
+                inset: 0,
+                background: "radial-gradient(ellipse at 50% 50%, rgba(201,162,39,0.15) 0%, rgba(12,11,10,0.95) 65%)",
+              }} />
+              <div style={{
+                position: "absolute",
+                top: "15%",
+                left: "15%",
+                width: "70%",
+                height: "70%",
+                borderRadius: "50% 45% 55% 50% / 50% 55% 45% 50%",
+                background: "linear-gradient(135deg, #9a9184 0%, #c9c3b8 30%, #7a756d 60%, #5a564f 100%)",
+                boxShadow: "inset 6px 6px 25px rgba(0,0,0,0.4), inset -3px -3px 15px rgba(200,200,200,0.2), 0 16px 50px -10px rgba(0,0,0,0.7)",
+                transform: "rotate(8deg)",
+              }} />
+              <div style={{
+                position: "absolute",
+                top: "30%",
+                left: "25%",
+                width: "25%",
+                height: "18%",
+                borderRadius: "55% 45% 40% 60%",
+                background: "linear-gradient(150deg, #f2f6f9, #d8dde1 70%, #b9c0c7)",
+                opacity: 0.5,
+                filter: "blur(1px)",
+              }} />
+              <div style={{
+                position: "absolute",
+                bottom: "25%",
+                right: "20%",
+                width: "18%",
+                height: "14%",
+                borderRadius: "45% 55% 50% 50%",
+                background: "linear-gradient(130deg, #8d979e, #6b7279)",
+                opacity: 0.45,
+                filter: "blur(1px)",
+              }} />
             </div>
           </Reveal>
         </div>
