@@ -41,9 +41,9 @@ export default function About() {
       >
         <div className="hero-canvas" aria-hidden="true">
           <OreCanvas3D
-            color="#7a4e2e"
-            veinColor="#b36a3c"
-            patina="#3a2a1c"
+            color="#9a663f"
+            veinColor="#d88f52"
+            patina="#24303c"
             roughness={0.72}
             metalness={0.55}
             seed={9}
@@ -53,7 +53,7 @@ export default function About() {
         </div>
         <div className="container hero-content">
           <p className="hero-kicker">{t("about.kicker")}</p>
-          <h1 className="hero-title" style={{ fontSize: "clamp(40px, 6vw, 80px)" }}>
+          <h1 className="hero-title" style={{ fontSize: "clamp(32px, 5vw, 64px)" }}>
             {t("about.title")}
           </h1>
           <p className="hero-sub">{t("about.sub")}</p>
@@ -76,7 +76,7 @@ export default function About() {
               <p
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(20px, 2.6vw, 30px)",
+                  fontSize: "clamp(18px, 2.2vw, 25px)",
                   lineHeight: 1.45,
                   color: "var(--text)",
                   maxWidth: "70ch",
@@ -122,8 +122,8 @@ export default function About() {
                   }}
                 >
                   <OreCanvas3D
-                    color="#3f3f44"
-                    veinColor="#8f9096"
+                    color="#535a66"
+                    veinColor="#c3cdd4"
                     patina={null}
                     roughness={0.95}
                     metalness={0.3}
@@ -182,7 +182,7 @@ export default function About() {
             <blockquote
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "clamp(20px, 2.4vw, 28px)",
+                fontSize: "clamp(18px, 2.1vw, 24px)",
                 lineHeight: 1.5,
                 color: "var(--text)",
                 fontStyle: "italic",

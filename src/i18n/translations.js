@@ -24,7 +24,8 @@ export const translations = {
     "footer.brand":
       "Mining, trading and exporting mineral metallic and non-metallic ores since {founded}. From the Horn of Africa to the world's foundries.",
     "footer.rights": "All rights reserved.",
-    "footer.countries": "Sudan · Ethiopia · Eritrea · Somalia · Uganda · Kenya · Dubai",
+    "footer.countries":
+      "Sudan · Ethiopia · Eritrea · Somalia · Uganda · Kenya · Dubai",
 
     // ── Home / Hero ──
     "home.kicker": "Melgara Mining & Manufacturing · Since {year}",
@@ -49,12 +50,16 @@ export const translations = {
     "ores.sub":
       "Our business is the provision of the finest raw materials — copper ore, manganese, chrome ore, iron, coal, graphite, talc — as well as their transport by land, sea, rail and even air.",
     "ores.learnMore": "Learn more",
+    "ores.explore": "Browse ores",
 
     // ── Home / Who we are teaser ──
     "who.eyebrow": "Who We Are",
     "who.title": "We don't broker minerals. We mine them.",
     "who.sub":
       "Since {founded}, Melgara has been part of this industry — mining, manufacturing and trading raw materials with the greatest degree of precision and care. Staffed by specialists trained in Poland and abroad, fluent in {langs} languages.",
+    "who.callout":
+      "Our mining, refining and shipping chain is built around transparency, direct supply and repeatable quality.",
+    "who.learnMore": "Learn more about us",
     "who.story": "Our Story",
     "who.coreSample": "Core sample · Iron ore",
 
@@ -164,8 +169,7 @@ export const translations = {
     "reach.air": "Air",
     "reach.airText": "Express freight for time-critical deliveries",
     "reach.hqLine": "HQ: {hq} · Hub: {hub}",
-    "reach.fromHq":
-      "From {hq} to the world — reach us at {email}",
+    "reach.fromHq": "From {hq} to the world — reach us at {email}",
     "reach.startShipping": "Start Shipping",
     "map.europe": "Europe",
     "map.asia": "Asia",
@@ -223,8 +227,7 @@ export const translations = {
     "contact.messagePh": "Grade requirements, timeline, port…",
     "contact.send": "Send Quote Request",
     "contact.sending": "Sending…",
-    "contact.note":
-      "Emailed directly to us · Response within 24 hours",
+    "contact.note": "Emailed directly to us · Response within 24 hours",
     "contact.successTitle": "Your quote request is ready.",
     "contact.sentText":
       "Your quote request has been emailed to us. We'll respond within 24 hours — in your language.",
@@ -303,6 +306,7 @@ export const translations = {
     "ores.sub":
       "የእኛ ተግባር ከፍተኛ ጥራት ያላቸውን ጥሬ እቃዎች — የመዳብ ማዕድን፣ ማንጋኒዝ፣ የክሮም ማዕድን፣ ብረት፣ የድንጋይ ከሰል፣ ግራፋይት፣ ታልክ — ማቅረብ እንዲሁም በመሬት፣ በባህር፣ በባቡር እና በአየር ማጓጓዝ ነው።",
     "ores.learnMore": "ተጨማሪ ይወቁ",
+    "ores.explore": "ማዕድናቶቻችንን ያስሱ",
 
     // ── Home / Who we are teaser ──
     "who.eyebrow": "እኛ ማን ነን",
@@ -367,8 +371,7 @@ export const translations = {
     "detail.moreEyebrow": "ተጨማሪ ያስሱ",
     "detail.related": "ተዛማጅ ማዕድናት",
     "detail.need": "{name} ይፈልጋሉ?",
-    "detail.needSub":
-      "በመጠን እና መድረሻ የዋጋ ጥያቄ ይላኩ — በ24 ሰዓት ውስጥ እንመልሳለን።",
+    "detail.needSub": "በመጠን እና መድረሻ የዋጋ ጥያቄ ይላኩ — በ24 ሰዓት ውስጥ እንመልሳለን።",
     "detail.emailUs": "በኢሜይል ያግኙን",
 
     // ── About ──
@@ -436,15 +439,13 @@ export const translations = {
     "trans.qc1Text":
       "ማዕድን በማዕድን ቁፋሮው ቦታ በጥብቅ ክትትል ይወጣል፣ ይደረደራል እና ናሙና ይወሰድበታል።",
     "trans.qc2Title": "የምርመራ ሰነድ",
-    "trans.qc2Text":
-      "የኬሚካል ትንታኔ ለእያንዳንዱ ቡድን ይመዘገባል — ደረጃ ይሰነዳል፣ በግምት አይባልም።",
+    "trans.qc2Text": "የኬሚካል ትንታኔ ለእያንዳንዱ ቡድን ይመዘገባል — ደረጃ ይሰነዳል፣ በግምት አይባልም።",
     "trans.qc3Title": "የኤክስፖርት ሰነዶች",
     "trans.qc3Text":
       "ሙሉ የመላኪያ እና የኤክስፖርት ሰነዶች ከእያንዳንዱ ዓለም አቀፍ ጭነት ጋር አብረው ይጓዛሉ።",
     "trans.libEyebrow": "የዝርዝር ሰነዶች ስብስብ",
     "trans.libTitle": "የዝርዝር ሰነዶችን ያውርዱ",
-    "trans.libSub":
-      "ከጭነት ጋር የምናስከትላቸው ሰነዶች — ያለምንም ምዝገባ ለእርስዎ ይገኛሉ።",
+    "trans.libSub": "ከጭነት ጋር የምናስከትላቸው ሰነዶች — ያለምንም ምዝገባ ለእርስዎ ይገኛሉ።",
     "trans.pdf": "↓ ፒዲኤፍ",
     "trans.ask": "ስለ ደረጃ ጥያቄ አለዎት?",
     "trans.askCta": "ባለሙያዎቻችንን ይጠይቁ",
@@ -503,8 +504,7 @@ export const translations = {
     // ── 404 ──
     "nf.kicker": "ስህተት 404",
     "nf.title": "ይህ የማዕድን መስመር ደርቋል።",
-    "nf.sub":
-      "የሚፈልጉት ገጽ ተቆፍሮ አልቋል። ወደ ላይ እንመልስዎታለን።",
+    "nf.sub": "የሚፈልጉት ገጽ ተቆፍሮ አልቋል። ወደ ላይ እንመልስዎታለን።",
     "nf.backHome": "ወደ መነሻ ይመለሱ",
     "nf.explore": "ማዕድናትን ያስሱ",
   },

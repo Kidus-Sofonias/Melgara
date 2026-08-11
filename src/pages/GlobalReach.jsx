@@ -35,21 +35,21 @@ export default function GlobalReach() {
         <div className="container">
           <Reveal>
             <p className="eyebrow">{t("reach.footprint")}</p>
-            <h2 className="sec-title" style={{ fontSize: "clamp(26px, 3vw, 42px)" }}>
+            <h2 className="sec-title" style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}>
               {t("reach.footprintTitle")}
             </h2>
           </Reveal>
           <div className="grid grid-4" style={{ marginTop: 40 }}>
             {countries.map((c, i) => (
               <Reveal key={c.name} delay={(i % 4) * 70}>
-                <div className="card" style={{ textAlign: "center", minHeight: 150 }}>
-                  <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 22, color: "var(--text)" }}>
+                <div className="card" style={{ textAlign: "center", minHeight: 130 }}>
+                  <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18, color: "var(--text)" }}>
                     {c.name}
                   </div>
-                  <div style={{ color: "var(--copper-bright)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", margin: "8px 0 10px" }}>
+                  <div style={{ color: "var(--copper-bright)", fontSize: 10.5, letterSpacing: "0.2em", textTransform: "uppercase", margin: "6px 0 8px" }}>
                     {c.region}
                   </div>
-                  <p style={{ color: "var(--muted)", fontSize: 13.5 }}>{c.note}</p>
+                  <p style={{ color: "var(--muted)", fontSize: 13 }}>{c.note}</p>
                 </div>
               </Reveal>
             ))}
@@ -61,17 +61,17 @@ export default function GlobalReach() {
         <div className="container">
           <Reveal>
             <p className="eyebrow">{t("reach.logistics")}</p>
-            <h2 className="sec-title" style={{ fontSize: "clamp(26px, 3vw, 42px)" }}>
+            <h2 className="sec-title" style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}>
               {t("reach.logisticsTitle")}
             </h2>
           </Reveal>
           <div className="grid grid-4" style={{ marginTop: 40 }}>
             {logistics.map(([icon, title, text], i) => (
               <Reveal key={title} delay={i * 80}>
-                <div className="card" style={{ textAlign: "center", minHeight: 170 }}>
-                  <div style={{ fontSize: 38, marginBottom: 14 }}>{icon}</div>
-                  <h3 style={{ fontSize: 18, marginBottom: 8 }}>{title}</h3>
-                  <p style={{ color: "var(--muted)", fontSize: 13.5 }}>{text}</p>
+                <div className="card" style={{ textAlign: "center", minHeight: 145 }}>
+                  <div style={{ fontSize: 32, marginBottom: 10 }}>{icon}</div>
+                  <h3 style={{ fontSize: 16, marginBottom: 6 }}>{title}</h3>
+                  <p style={{ color: "var(--muted)", fontSize: 13 }}>{text}</p>
                 </div>
               </Reveal>
             ))}
@@ -79,7 +79,7 @@ export default function GlobalReach() {
 
           <Reveal delay={120}>
             <div className="card" style={{ marginTop: 40, textAlign: "center", borderColor: "rgba(200,121,62,0.3)" }}>
-              <h3 style={{ fontSize: 24 }}>
+              <h3 style={{ fontSize: 20 }}>
                 {t("reach.hqLine", { hq: COMPANY.hq, hub: COMPANY.hub })}
               </h3>
               <p className="sec-sub" style={{ marginInline: "auto" }}>

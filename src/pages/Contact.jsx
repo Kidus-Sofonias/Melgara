@@ -206,9 +206,9 @@ export default function Contact() {
       >
         <div className="hero-canvas" aria-hidden="true">
           <OreCanvas3D
-            color="#b9c0c7"
-            veinColor="#f2f6f9"
-            patina="#8d979e"
+            color="#d3dbe2"
+            veinColor="#fafcfe"
+            patina="#8fc8c4"
             roughness={0.5}
             metalness={0.2}
             seed={16}
@@ -218,7 +218,7 @@ export default function Contact() {
         </div>
         <div className="container hero-content">
           <p className="hero-kicker">{t("contact.kicker")}</p>
-          <h1 className="hero-title" style={{ fontSize: "clamp(40px, 6vw, 78px)" }}>
+          <h1 className="hero-title" style={{ fontSize: "clamp(32px, 5vw, 62px)" }}>
             {t("contact.title")}
           </h1>
           <p className="hero-sub">{t("contact.sub")}</p>
@@ -230,7 +230,7 @@ export default function Contact() {
           <div className="grid grid-2 contact-grid" style={{ gap: 50, alignItems: "start" }}>
             <Reveal>
               <p className="eyebrow">{t("contact.quoteEyebrow")}</p>
-              <h2 className="sec-title" style={{ fontSize: "clamp(24px, 2.8vw, 36px)" }}>
+              <h2 className="sec-title" style={{ fontSize: "clamp(21px, 2.5vw, 30px)" }}>
                 {t("contact.smartTitle")}
               </h2>
               <div style={{ marginTop: 28 }}>

@@ -87,7 +87,7 @@ export default function Transparency() {
         <div className="container">
           <Reveal>
             <p className="eyebrow">{t("trans.qualityEyebrow")}</p>
-            <h2 className="sec-title" style={{ fontSize: "clamp(26px, 3vw, 42px)" }}>
+            <h2 className="sec-title" style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}>
               {t("trans.qualityTitle")}
             </h2>
             <p className="sec-sub">{t("trans.qualitySub")}</p>
@@ -110,7 +110,7 @@ export default function Transparency() {
         <div className="container">
           <Reveal>
             <p className="eyebrow">{t("trans.libEyebrow")}</p>
-            <h2 className="sec-title" style={{ fontSize: "clamp(26px, 3vw, 42px)" }}>
+            <h2 className="sec-title" style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}>
               {t("trans.libTitle")}
             </h2>
             <p className="sec-sub">{t("trans.libSub")}</p>

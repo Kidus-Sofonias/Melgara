@@ -1,71 +1,39 @@
 import { Link } from "react-router-dom";
-import { COMPANY, ORES } from "../data/ores";
+import { COMPANY } from "../data/ores";
 import { useLang } from "../context/LanguageContext";
 
 function Footer() {
-  const { t, pick } = useLang();
+  const { t } = useLang();
 
   return (
     <footer className="footer">
       <div className="container">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <Link to="/" className="nav-logo" style={{ marginBottom: 10 }}>
-              <img src="/logo.jpeg" alt={`${COMPANY.name} logo`} />
-              <span>
-                MEL<span style={{ color: "var(--copper)" }}>GARA</span>
-              </span>
-            </Link>
-            <p>
-              {COMPANY.fullName} — {t("footer.brand", { founded: COMPANY.founded })}
-            </p>
-          </div>
+        <div className="footer-bar">
+          <Link to="/" className="nav-logo footer-logo">
+            <img src="/logo.png" alt={`${COMPANY.name} logo`} />
+            <span>
+              MEL<span style={{ color: "var(--copper)" }}>GARA</span>
+            </span>
+          </Link>
 
-          <div>
-            <h4>{t("footer.ores")}</h4>
-            {ORES.map((o) => (
-              <Link key={o.slug} to={`/ores/${o.slug}`} className="f-link">
-                {pick(o).name}
-              </Link>
-            ))}
-          </div>
+          <nav className="footer-nav" aria-label="Footer">
+            <Link to="/about">{t("footer.about")}</Link>
+            <Link to="/ores">{t("footer.ores")}</Link>
+            <Link to="/global-reach">{t("footer.global")}</Link>
+            <Link to="/transparency">{t("footer.transparency")}</Link>
+            <Link to="/contact">{t("footer.quote")}</Link>
+          </nav>
 
-          <div>
-            <h4>{t("footer.company")}</h4>
-            <Link to="/about" className="f-link">{t("footer.about")}</Link>
-            <Link to="/global-reach" className="f-link">{t("footer.global")}</Link>
-            <Link to="/transparency" className="f-link">{t("footer.transparency")}</Link>
-            <Link to="/contact" className="f-link">{t("footer.quote")}</Link>
-            <a className="f-link" href={COMPANY.socials.facebook} target="_blank" rel="noreferrer">Facebook</a>
-            <a className="f-link" href={COMPANY.socials.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-            <a className="f-link" href={COMPANY.socials.twitter} target="_blank" rel="noreferrer">Twitter / X</a>
-          </div>
-
-          <div>
-            <h4>{t("footer.contact")}</h4>
-            <ul className="footer-contact">
-              <li>
-                <a href={`mailto:${COMPANY.email[0]}`}>{COMPANY.email[0]}</a>
-              </li>
-              <li>
-                <a href={`mailto:${COMPANY.email[1]}`}>{COMPANY.email[1]}</a>
-              </li>
-              <li>WeChat: {COMPANY.wechat}</li>
-              <li>
-                <a href={COMPANY.skype} target="_blank" rel="noreferrer">
-                  Skype: Melgara
-                </a>
-              </li>
-              <li style={{ marginTop: 10, color: "var(--text-dim)" }}>
-                {t("footer.countries")}
-              </li>
-            </ul>
+          <div className="footer-contact">
+            <a href={`mailto:${COMPANY.email[0]}`}>{COMPANY.email[0]}</a>
+            <span>WeChat: {COMPANY.wechat}</span>
           </div>
         </div>
 
         <div className="footer-bottom">
           <span>
-            © {new Date().getFullYear()} {COMPANY.fullName}. {t("footer.rights")}
+            © {new Date().getFullYear()} {COMPANY.fullName}.{" "}
+            {t("footer.rights")}
           </span>
           <a
             className="dev-credit"

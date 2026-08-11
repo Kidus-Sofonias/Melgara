@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Link } from "react-router-dom";
-import OreCanvas3D from "./OreCanvas3D";
+import OreImage from "./OreImage";
 import { useLang } from "../context/LanguageContext";
 
 export default function OreCarousel({ ores }) {
@@ -140,28 +140,12 @@ export default function OreCarousel({ ores }) {
                   aria-label={`View ${oo.name} specifications`}
                 >
                   <div className="ore-carousel-canvas">
-                    {isActive ? (
-                      <OreCanvas3D
-                        color={o.color}
-                        veinColor={o.veinColor}
-                        patina={o.patina}
-                        roughness={o.roughness}
-                        metalness={o.metalness}
-                        seed={o.seed}
-                        intensity={1}
-                        detail={48}
-                        dpr={2}
-                        photo={o.photo}
-                        modelPath={o.modelPath}
-                      />
-                    ) : (
-                      <div style={{
-                        width: "100%",
-                        height: "100%",
-                        background: `radial-gradient(ellipse at 40% 35%, ${o.color}44 0%, ${o.patina}22 40%, rgba(12,11,10,0.9) 70%)`,
-                        borderRadius: 10,
-                      }} />
-                    )}
+                    <OreImage
+                      src={o.photo}
+                      alt={oo.name}
+                      color={o.color}
+                      eager={isActive}
+                    />
                   </div>
                   <div className="ore-carousel-info">
                     <span
@@ -171,9 +155,7 @@ export default function OreCarousel({ ores }) {
                         borderColor: isActive
                           ? "var(--copper)"
                           : "var(--line)",
-                        color: isActive
-                          ? "var(--copper-bright)"
-                          : "var(--muted)",
+                        color: isActive ? "var(--copper)" : "var(--muted)",
                       }}
                     >
                       <span className="dot" />

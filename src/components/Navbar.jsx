@@ -35,7 +35,7 @@ function Navbar() {
       <header className={`nav ${scrolled || open ? "scrolled" : ""}`}>
         <div className="nav-inner">
           <Link to="/" className="nav-logo">
-            <img src="/logo.jpeg" alt={`${COMPANY.name} logo`} />
+            <img src="/logo.png" alt={`${COMPANY.name} logo`} />
             <span>
               MEL<span style={{ color: "var(--copper)" }}>GARA</span>
             </span>

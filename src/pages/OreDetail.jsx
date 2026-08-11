@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from "react-router-dom";
-import OreCanvas3D from "../components/OreCanvas3D";
+import OreImage from "../components/OreImage";
+import IndustryStrip from "../components/IndustryStrip";
 import Reveal from "../components/Reveal";
 import { ORES, COMPANY, INDUSTRIES_AM } from "../data/ores";
 import { useLang } from "../context/LanguageContext";
@@ -92,21 +93,18 @@ export default function OreDetail() {
         style={{ minHeight: "82vh", background: "radial-gradient(ellipse at 30% 40%, rgba(200,121,62,0.1), var(--bg) 60%)" }}
       >
         <div className="hero-canvas" aria-hidden="true">
-          <OreCanvas3D
-            color={ore.color}
-            veinColor={ore.veinColor}
-            patina={ore.patina}
-            roughness={ore.roughness}
-            metalness={ore.metalness}
-            seed={ore.seed}
-            intensity={1}
-            photo={ore.photo}
-            modelPath={ore.modelPath}
-          />
+          <div className="hero-photo" aria-hidden="true">
+            <img
+              src={ore.photo}
+              alt=""
+              fetchpriority="high"
+              style={{ objectPosition: "50% 38%" }}
+            />
+          </div>
         </div>
         <div className="container hero-content">
           <p className="hero-kicker">{familyLabel}</p>
-          <h1 className="hero-title" style={{ fontSize: "clamp(38px, 5.5vw, 72px)" }}>
+          <h1 className="hero-title" style={{ fontSize: "clamp(31px, 4.5vw, 56px)" }}>
             {oo.name}
           </h1>
           <p className="hero-sub">{oo.heroTagline}</p>
@@ -128,7 +126,7 @@ export default function OreDetail() {
             <div className="grid grid-2" style={{ gap: 40, alignItems: "start" }}>
               <div>
                 <p className="eyebrow">{t("detail.overview")}</p>
-                <h2 className="sec-title" style={{ fontSize: "clamp(26px, 3vw, 38px)" }}>
+                <h2 className="sec-title" style={{ fontSize: "clamp(22px, 2.6vw, 32px)" }}>
                   {oo.headline}
                 </h2>
                 <p className="sec-sub">{oo.blurb}</p>
@@ -151,7 +149,7 @@ export default function OreDetail() {
                 <div style={{ fontFamily: "var(--font-display)", fontSize: 13, letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--muted)" }}>
                   {t("detail.availableGrade")}
                 </div>
-                <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(34px, 4.5vw, 56px)", color: "var(--copper-bright)", margin: "14px 0 4px" }}>
+                <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(28px, 3.8vw, 44px)", color: "var(--copper-bright)", margin: "14px 0 4px" }}>
                   {oo.grade}
                 </div>
                 <div style={{ color: "var(--muted)", fontSize: 14 }}>
@@ -168,7 +166,7 @@ export default function OreDetail() {
         <div className="container">
           <Reveal>
             <p className="eyebrow">{t("detail.analysisEyebrow")}</p>
-            <h2 className="sec-title" style={{ fontSize: "clamp(26px, 3vw, 42px)" }}>
+            <h2 className="sec-title" style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}>
               {t("detail.analysisTitle")}
             </h2>
             <p className="sec-sub">{t("detail.analysisSub")}</p>
@@ -186,30 +184,24 @@ export default function OreDetail() {
       {/* Applications */}
       <section className="section">
         <div className="container">
-          <Reveal>
-            <p className="eyebrow">{t("detail.applications")}</p>
-            <h2 className="sec-title" style={{ fontSize: "clamp(26px, 3vw, 42px)" }}>
-              {t("detail.powers")}
-            </h2>
-          </Reveal>
-          <div className="grid app-grid" style={{ gap: 16, marginTop: 40 }}>
-            {industries.slice(0, 6).map((ind, i) => (
-              <Reveal key={ind} delay={(i % 3) * 70}>
-                <div className="card" style={{ padding: "20px", textAlign: "center", fontFamily: "var(--font-display)", fontSize: 14.5 }}>
-                  {ind}
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+        <Reveal>
+          <p className="eyebrow">{t("detail.applications")}</p>
+          <h2 className="sec-title" style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}>
+            {t("detail.powers")}
+          </h2>
+        </Reveal>
+        <Reveal delay={100}>
+          <IndustryStrip items={industries} />
+        </Reveal>
+      </div>
+    </section>
 
       {/* Related ores */}
       <section className="section" style={{ background: "var(--bg-2)" }}>
         <div className="container">
           <Reveal>
             <p className="eyebrow">{t("detail.moreEyebrow")}</p>
-            <h2 className="sec-title" style={{ fontSize: "clamp(26px, 3vw, 42px)" }}>
+            <h2 className="sec-title" style={{ fontSize: "clamp(22px, 2.6vw, 34px)" }}>
               {t("detail.related")}
             </h2>
           </Reveal>
@@ -222,20 +214,7 @@ export default function OreDetail() {
                   <Reveal key={o.slug} delay={i * 80}>
                     <Link to={`/ores/${o.slug}`} className="card" style={{ display: "block", textAlign: "center", padding: 20 }}>
                       <div style={{ height: 130, borderRadius: 10, overflow: "hidden" }}>
-                        <OreCanvas3D
-                          color={o.color}
-                          veinColor={o.veinColor}
-                          patina={o.patina}
-                          roughness={o.roughness}
-                          metalness={o.metalness}
-                          seed={o.seed}
-                          intensity={0.7}
-                          detail={14}
-                          dpr={1}
-                          lite
-                          photo={o.photo}
-                          modelPath={o.modelPath}
-                        />
+                        <OreImage src={o.photo} alt={rel.name} color={o.color} />
                       </div>
                       <h3 style={{ fontSize: 16, marginTop: 14 }}>{rel.name}</h3>
                       <p style={{ color: "var(--copper-bright)", fontFamily: "var(--font-display)", fontSize: 12, letterSpacing: "0.06em", marginTop: 5 }}>

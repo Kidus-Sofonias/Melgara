@@ -15,8 +15,8 @@ export default function NotFound() {
     >
       <div className="hero-canvas" aria-hidden="true">
         <OreCanvas3D
-          color="#3f3f44"
-          veinColor="#8f9096"
+          color="#535a66"
+          veinColor="#c3cdd4"
           patina={null}
           roughness={0.95}
           metalness={0.3}
