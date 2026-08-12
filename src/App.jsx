@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollProgress from "./components/ScrollProgress";
+import ConcentrationFlow from "./components/ConcentrationFlow";
 import GrainOverlay from "./components/GrainOverlay";
 import BackToTop from "./components/BackToTop";
 import PageTransition from "./components/PageTransition";
@@ -48,6 +49,7 @@ function App() {
 
   return (
     <>
+      <ConcentrationFlow />
       <ScrollProgress />
       <GrainOverlay />
       <BackToTop />
