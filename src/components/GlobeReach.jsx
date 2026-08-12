@@ -105,37 +105,29 @@ const ROLE_LABELS = {
 };
 /* Solid hex colors for the 3D scene (CSS vars can't reach WebGL materials) */
 const ROLE_HEX = {
-  hq: "#ff9e42",
+  hq: "#ff4d3d", // headquarters — signal red, distinct from every other marker
   hub: "#f0c05a",
   operations: "#c3cdd4",
   logistics: "#9aa7b1",
   global: "#6b7682",
 };
-/* CSS var colors for the DOM tooltip / legend */
+/* Colors for the DOM tooltip / legend dots (kept in sync with ROLE_HEX) */
 const ROLE_CSS = {
-  hq: "var(--copper-bright)",
+  hq: "#ff4d3d",
   hub: "var(--brass)",
   operations: "var(--text-dim)",
   logistics: "var(--muted)",
   global: "var(--faint)",
 };
 
-/* Marker size multiplier + city-label config by role — the mentioned
-   capitals (HQ + hub + operations) get the spotlight. */
+/* Marker size multiplier by role — the mentioned capitals
+   (HQ + hub + operations) stand out. */
 const ROLE_SIZE = {
   hq: 1.5,
   hub: 1.3,
   operations: 1.1,
   logistics: 1.0,
   global: 0.8,
-};
-
-const ROLE_LABEL = {
-  hq: { scale: 1.12, color: "#ffc26b" },
-  hub: { scale: 1.02, color: "#ffd9a0" },
-  operations: { scale: 0.88, color: "#ffffff" },
-  logistics: { scale: 0.82, color: "#ffffff" },
-  global: null,
 };
 
 /* ---- Lat/lng -> unit vector on the sphere (matches the sphere UV map) ---- */
@@ -403,69 +395,35 @@ function Marker({ loc, hex, isActive, onOver, onOut, onClick, markerRefs }) {
   );
 }
 
-/* ---- City label: canvas-text sprite that always faces the camera ---- */
-function makeLabelTexture(name, color) {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-  const font = '600 30px "Space Grotesk", "Inter", system-ui, sans-serif';
-  ctx.font = font;
-  const w = Math.ceil(ctx.measureText(name).width) + 52;
-  const h = 66;
-  canvas.width = w;
-  canvas.height = h;
-  ctx.font = font;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  const cx = w / 2;
-  const cy = h / 2;
-  ctx.fillStyle = "rgba(23, 30, 36, 0.62)";
-  if (typeof ctx.roundRect === "function") {
-    ctx.beginPath();
-    ctx.roundRect(cx - w / 2 + 10, cy - 21, w - 20, 42, 21);
-    ctx.fill();
-  } else {
-    ctx.fillRect(cx - w / 2 + 10, cy - 21, w - 20, 42);
-  }
-  ctx.fillStyle = color;
-  ctx.fillText(name, cx, cy + 1);
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = 2;
-  return tex;
-}
-
-function CityLabel({ loc }) {
-  const cfg = ROLE_LABEL[loc.role];
-  const pos = useMemo(
-    () => latLngToVector3(loc.lat, loc.lng, 1.16),
-    [loc.lat, loc.lng]
-  );
-  const tex = useMemo(
-    () => (cfg ? makeLabelTexture(loc.name, cfg.color) : null),
-    [loc.name, cfg]
-  );
-
-  useEffect(() => () => tex && tex.dispose(), [tex]);
-  if (!cfg || !tex) return null;
-
-  const s = cfg.scale;
-  return (
-    <sprite position={pos} scale={[s, s * 0.2, 1]} raycast={() => null}>
-      <spriteMaterial map={tex} transparent depthWrite={false} sizeAttenuation />
-    </sprite>
-  );
-}
-
-/* ---- Spinning globe group + focus/zoom rig ---- */
+/* ---- Globe group + focus/zoom rig ----
+   The earth sphere, atmosphere, arcs and markers ALL live inside this
+   group so they stay perfectly aligned. The group does NOT revolve —
+   ONE_SHOT_QUAT fixes it to the angle that frames the East-Africa
+   cluster, Dubai and the global markets in a single view.
+   (yaw -136.6° · pitch +18.6°, computed from the location centroid) */
 const Z_AXIS = new THREE.Vector3(0, 0, 1);
+const Y_AXIS = new THREE.Vector3(0, 1, 0);
+const X_AXIS = new THREE.Vector3(1, 0, 0);
+const ONE_SHOT_QUAT = new THREE.Quaternion()
+  .setFromAxisAngle(X_AXIS, 0.3247)
+  .multiply(new THREE.Quaternion().setFromAxisAngle(Y_AXIS, -2.384));
 
-function GlobeScene({ focused, hovering, activeName, markerRefs, onHover, onOut, onPick }) {
+function GlobeScene({
+  focused,
+  activeName,
+  markerRefs,
+  onHover,
+  onOut,
+  onPick,
+  mapTexture,
+  onReset,
+}) {
   const spin = useRef(null);
   const { camera } = useThree();
   const focusStart = useRef(0);
   const qTarget = useMemo(() => new THREE.Quaternion(), []);
   const dirV = useMemo(() => new THREE.Vector3(), []);
-  const spinSpeed = 0.055;
+  const qInitial = useMemo(() => ONE_SHOT_QUAT.clone(), []);
 
   // Pooled vectors (no per-frame allocations)
   const focusDir = useMemo(() => new THREE.Vector3(), []);
@@ -492,14 +450,21 @@ function GlobeScene({ focused, hovering, activeName, markerRefs, onHover, onOut,
       g.quaternion.slerp(qTarget, damp * (1.2 + t * 0.6));
       camera.position.z += (2.55 - camera.position.z) * damp;
     } else {
-      g.rotation.y += delta * spinSpeed * (hovering ? 0.28 : 1);
+      // No revolving — glide back to the one-shot framing after a focus
+      g.quaternion.slerp(qInitial, damp * 0.6);
       camera.position.z += (3.2 - camera.position.z) * damp;
     }
     g.position.y = Math.sin(state.clock.elapsedTime * 0.45) * 0.035;
   });
 
   return (
-    <group ref={spin}>
+    <group ref={spin} quaternion={qInitial}>
+      {/* Earth sphere — aligned with the markers below */}
+      <mesh onClick={onReset}>
+        <sphereGeometry args={[1, 64, 64]} />
+        <meshStandardMaterial map={mapTexture} roughness={0.9} metalness={0.05} />
+      </mesh>
+      <Atmosphere />
       {ARCS.map((arc, i) => (
         <Arc
           key={i}
@@ -519,10 +484,6 @@ function GlobeScene({ focused, hovering, activeName, markerRefs, onHover, onOut,
           onOut={onOut}
           onClick={() => onPick(loc)}
         />
-      ))}
-      {/* City-name labels on the mentioned capitals */}
-      {LOCATIONS.map((loc) => (
-        <CityLabel key={`label-${loc.name}`} loc={loc} />
       ))}
     </group>
   );
@@ -651,20 +612,16 @@ export default function GlobeReach() {
           <ambientLight intensity={0.9} />
           <directionalLight position={[3, 2.5, 4]} intensity={1.5} color="#ffe6c4" />
           <directionalLight position={[-4, -1, -2.5]} intensity={0.7} color="#58d3c8" />
-          <group rotation={[0.16, 0, 0]}>
-            <mesh onClick={handleReset}>
-              <sphereGeometry args={[1, 64, 64]} />
-              <meshStandardMaterial map={mapTexture} roughness={0.9} metalness={0.05} />
-            </mesh>
-            <Atmosphere />
+          <group>
             <GlobeScene
               focused={focused}
-              hovering={!!hovered}
               activeName={activeName}
               markerRefs={markerRefs}
               onHover={handleHover}
               onOut={handleOut}
               onPick={handlePick}
+              mapTexture={mapTexture}
+              onReset={handleReset}
             />
           </group>
           <TooltipProbe loc={tooltipLoc} markerRefs={markerRefs} onPos={applyTooltipPos} />
