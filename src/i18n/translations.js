@@ -130,6 +130,7 @@ export const translations = {
     "about.ores": "Our Ores",
     "about.workWithUs": "Work With Us",
     "about.standard": "The Standard",
+    "about.eyebrow": "mel",
     "about.since": "Since {year}",
     "about.quarter": "A quarter-century of raw material",
     "about.staff":

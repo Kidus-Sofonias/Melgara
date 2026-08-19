@@ -201,12 +201,6 @@ function TeamSection() {
       style={{ background: "var(--bg-2)", paddingTop: 52, paddingBottom: 52 }}
     >
       <div className="container">
-        <Reveal>
-          <p className="eyebrow">{t("about.eyebrow") || "OUR TEAM"}</p>
-          <h2 className="sec-title">
-            {t("who.title") || "The People Behind the Minerals"}
-          </h2>
-        </Reveal>
         {highlight && (
           <Reveal delay={80}>
             <div
