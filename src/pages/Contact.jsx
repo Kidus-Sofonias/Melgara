@@ -1,5 +1,5 @@
 import { useState } from "react";
-import OreCanvas3D from "../components/OreCanvas3D";
+
 import Reveal from "../components/Reveal";
 import { ORES, COMPANY, COUNTRIES_AM } from "../data/ores";
 import { useLang } from "../context/LanguageContext";
@@ -205,15 +205,15 @@ export default function Contact() {
         style={{ minHeight: "60vh", background: "radial-gradient(ellipse at 30% 40%, rgba(200,121,62,0.1), var(--bg) 60%)" }}
       >
         <div className="hero-canvas" aria-hidden="true">
-          <OreCanvas3D
-            color="#d3dbe2"
-            veinColor="#fafcfe"
-            patina="#8fc8c4"
-            roughness={0.5}
-            metalness={0.2}
-            seed={16}
-            intensity={0.8}
-            photo="/ores/nonmetallic.jpg"
+          <img
+            src="/images/mining-machinery-1.jpg"
+            alt="Mining operations"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              opacity: 0.5,
+            }}
           />
         </div>
         <div className="container hero-content">

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import OreCanvas3D from "../components/OreCanvas3D";
 import { useLang } from "../context/LanguageContext";
 
 export default function NotFound() {
@@ -14,14 +13,15 @@ export default function NotFound() {
       }}
     >
       <div className="hero-canvas" aria-hidden="true">
-        <OreCanvas3D
-          color="#535a66"
-          veinColor="#c3cdd4"
-          patina={null}
-          roughness={0.95}
-          metalness={0.3}
-          seed={3}
-          intensity={0.6}
+        <img
+          src="/images/mining-machinery-2.jpg"
+          alt="Mining site"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: 0.4,
+          }}
         />
       </div>
       <div className="container hero-content">

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import OreCanvas3D from "../components/OreCanvas3D";
 import Reveal from "../components/Reveal";
 import { COMPANY, TIMELINE, TIMELINE_AM, VALUES, VALUES_AM } from "../data/ores";
 import { useLang } from "../context/LanguageContext";
@@ -40,15 +39,15 @@ export default function About() {
         style={{ minHeight: "78vh", background: "radial-gradient(ellipse at 70% 40%, rgba(201,162,39,0.1), var(--bg) 60%)" }}
       >
         <div className="hero-canvas" aria-hidden="true">
-          <OreCanvas3D
-            color="#9a663f"
-            veinColor="#d88f52"
-            patina="#24303c"
-            roughness={0.72}
-            metalness={0.55}
-            seed={9}
-            intensity={0.9}
-            photo="/ores/iron.jpg"
+          <img
+            src="/images/mining-machinery-1.jpg"
+            alt="Mining machinery at work"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              opacity: 0.6,
+            }}
           />
         </div>
         <div className="container hero-content">
@@ -114,21 +113,17 @@ export default function About() {
                     borderRadius: 18,
                     border: "1px solid var(--line)",
                     overflow: "hidden",
-                    background: "radial-gradient(circle at 50% 40%, rgba(200,121,62,0.12), transparent 70%)",
                     aspectRatio: "4/3",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
-                  <OreCanvas3D
-                    color="#535a66"
-                    veinColor="#c3cdd4"
-                    patina={null}
-                    roughness={0.95}
-                    metalness={0.3}
-                    seed={12}
-                    intensity={0.8}
+                  <img
+                    src="/images/mining-machinery-2.jpg"
+                    alt="Mining operations"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
                   />
                 </div>
               </Reveal>
